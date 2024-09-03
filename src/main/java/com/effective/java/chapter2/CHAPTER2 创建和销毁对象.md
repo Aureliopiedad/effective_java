@@ -122,3 +122,25 @@ public static Boolean valueOf(boolean b) {
    ```
 
 为了将Singleton实现序列化(Serializable)，需要`readresolve()`方法来干预序列化，确保反序列化后和序列化之前的对象的内存地址相同。
+
+使用单元素的枚举类也是实现单例的一种方式。
+
+```java
+enum Singleton3 {
+    INSTANCE;
+
+    public String call() {
+        return "singleton3";
+    }
+}
+```
+
+## 通过私有构造器强化不可实例化的能力
+
+一些工具类使用私有构造器禁止实例化。确保这些工具类没有子类即可。
+
+## 优先考虑依赖注入引入资源
+
+听起来高大上，其实就是在创建类的实例的时候将需要的底层资源传递到构造器中。
+
+有一种变体形式，是将资源工厂传递到构造器，最好是用 `Supplier<T>` ，这样客户端可以通过传入的工厂实现指定类型的任意子类型。
